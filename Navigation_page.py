@@ -59,7 +59,7 @@ def get_links(browser):
                     page_no += 1
                 if inthere == True:
                         # wx.MessageBox(' Nothing there to collect link ','tenderwizard.my', wx.OK | wx.ICON_INFORMATION)
-                        time.sleep(2)
+                        time.sleep(1)
                 else:
                     for tender_link in tender_links_list:
                         browser.get(tender_link)

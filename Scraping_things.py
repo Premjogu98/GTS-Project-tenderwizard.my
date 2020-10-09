@@ -19,7 +19,7 @@ def remove_html_tag(string):
 def scrap_data(browser,get_htmlsource,tender_link):
 
     SegField = []
-    for data in range(42):
+    for data in range(45):
         SegField.append('')
     
     a = True
@@ -41,6 +41,24 @@ def scrap_data(browser,get_htmlsource,tender_link):
             Purchaser = get_htmlsource.partition('Buyer:')[2].partition("</td>")[0].strip()
             if Purchaser != '':
                 Purchaser = remove_html_tag(Purchaser)
+                if Purchaser == 'MIROS':
+                     Purchaser = 'Malaysian Institute of Road Safety Research (MIROS)'
+                elif Purchaser == 'KESEDAR':
+                    Purchaser = 'SOUTH KELANTAN DEVELOPMENT BOARD (KESEDAR)'
+                elif Purchaser == 'LHDNM':
+                    Purchaser = 'Inland Revenue Board of Malaysia (LHDNM)'
+                elif Purchaser == 'SKM':
+                    Purchaser = 'SuruhanJaya Koperasi Malaysia (SKM)'
+                elif Purchaser == 'UTHM':
+                    Purchaser = 'Universiti Tun Hussein Onn Malaysia (UTHM)'
+                elif Purchaser == 'LKIM':
+                    Purchaser = 'Malaysian Fisheries Development Authority (LKIM)'
+                elif Purchaser == 'KEDA':
+                    Purchaser = 'Kedah Regional Development Authority (KEDA)'
+                elif Purchaser == 'RAC':
+                    Purchaser = 'Railway Assets Corporation (RAC)'
+                else:
+                    SegField[12] = Purchaser.strip().upper()
                 SegField[12] = Purchaser.strip().upper()
 
             for Tender_id in browser.find_elements_by_xpath('//*[@id="tenderNumberspan"]'):
@@ -104,6 +122,11 @@ def scrap_data(browser,get_htmlsource,tender_link):
             SegField[27] = "0"  # Financier
             SegField[7] = 'MY'
             SegField[31] = 'tenderwizard.my'
+            SegField[20] = ""
+            SegField[21] = "" 
+            SegField[42] = SegField[7]
+            SegField[43] = "" 
+
             for SegIndex in range(len(SegField)):
                 print(SegIndex, end=' ')
                 print(SegField[SegIndex])
@@ -120,8 +143,8 @@ def scrap_data(browser,get_htmlsource,tender_link):
                 wx.MessageBox(' Short Desc Blank ','tenderwizard.my', wx.OK | wx.ICON_INFORMATION)
             else:
                 check_date(get_htmlsource, SegField)
-                
-
+                pass
+            
             a = False
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
